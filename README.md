@@ -1,4 +1,16 @@
-# Getting Started with Create React App
+# Trap Focus within a Modal or Form
+npm start
+Click the __Increment Counter__ button on the panel
+Oberve the confirmation dialog that maintains focus on its two __Yes__ and __No__ buttons
+across tab and back-tab keypresses.
+
+### Initial Focus Screen Capture
+A back-tab here would move focus to the last focusable control ('No'). A forward tab on that control 
+would wrap the focus back to the first focuable control ('Yes')
+
+![doc/modal.png](doc/modal.png)
+
+------------------------------------------------
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
