@@ -1,4 +1,4 @@
-import React, {forwardRef, useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import PropTypes from 'prop-types';
 import {CM_CENTER_CENTER, CM_TOP_CENTER, CM_TOP_LEFT, CM_TOP_RIGHT} from "./index";
@@ -56,7 +56,7 @@ const Container = styled.div`
     color: rgba(0,0,139, 0.9);
 `;
 
-const StyledButton = styled.button.attrs((props) => ({ ref: props.ref }))`
+const Button = styled.button.attrs((props) => ({ ref: props.ref }))`
     background-color: ${({primary}) => (primary ? 'green' : 'red')};
     color: ${({primary}) => (primary ? 'white' : 'white')};
     border: solid 2px #9f7500;
@@ -70,11 +70,6 @@ const StyledButton = styled.button.attrs((props) => ({ ref: props.ref }))`
       box-shadow: 0 0 6px red;
     }
 `;
-
-// Need forwardRef wrapper on component to set a ref on contained html element styled.button
-const Button = forwardRef((props, ref) => (
-    <StyledButton ref={ref} {...props} />
-));
 
 const Header = styled.div`
     font-size: 2.4rem;
@@ -126,19 +121,17 @@ export default function ConfirmationModalImpl(props) {
     }, [show]);
 
     return (
-        <div onKeyDown={(e) => {trapFocusInComponent(e, refModalTrap);}} ref={refModalTrap}>
-            <Model show={show}>
-                <Container openPos={openPos} ref={ref}>
-                    <Header>{headerText}</Header>
-                    <HBar/>
-                    <Slot>{detailText}</Slot>
-                    <ButtonBar>
-                        <Button ref={refInitFocus} onClick={sendYes} primary={true}>Yes</Button>
-                        <Button onClick={sendNo} primary={false}>No</Button>
-                    </ButtonBar>
-                </Container>
-            </Model>
-        </div>
+        <Model show={show} onKeyDown={(e) => {trapFocusInComponent(e, refModalTrap);}} ref={refModalTrap}>
+            <Container openPos={openPos} ref={ref}>
+                <Header>{headerText}</Header>
+                <HBar/>
+                <Slot>{detailText}</Slot>
+                <ButtonBar>
+                    <Button ref={refInitFocus} onClick={sendYes} primary={true}>Yes</Button>
+                    <Button onClick={sendNo} primary={false}>No</Button>
+                </ButtonBar>
+            </Container>
+        </Model>
     );
 }
 ConfirmationModalImpl.propTypes = {
