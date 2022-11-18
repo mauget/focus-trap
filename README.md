@@ -6,7 +6,10 @@ across tab and back-tab keypresses.
 
 ### Initial Focus Screen Capture
 A back-tab here would move focus to the last focusable control ('No'). A forward tab on that control 
-would wrap the focus back to the first focuable control ('Yes')
+would wrap the focus back to the first focuable control ('Yes').
+
+A custom hook, `useIntialFocus` sets the initial focus to eitehr the first or the last focuable
+element, according to its `wantLawt` parameter.
 
 ![doc/modal.png](doc/modal.png)
 

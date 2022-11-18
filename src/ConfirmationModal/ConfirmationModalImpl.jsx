@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import PropTypes from 'prop-types';
 import {CM_CENTER_CENTER, CM_TOP_CENTER, CM_TOP_LEFT, CM_TOP_RIGHT} from "./index";
 import useEscapeKey from "../hooks/useEscapeKey";
 import useOutsideClick from "../hooks/useOutsideClick";
-import trapFocusInComponent from "../handlers/trapFocusInComponent";
+import { trapFocusInComponent } from "../handlers/trapFocusInComponent";
+import useInitialFocus from "../hooks/useInitialFocus";
 
 // These are private components
 
@@ -113,12 +114,7 @@ export default function ConfirmationModalImpl(props) {
     useOutsideClick(sendNo, ref);
 
     const refModalTrap = useRef(null);
-
-    // Wiring to set initial focus on a component after each visible render
-    const refInitFocus = useRef(null);
-    useEffect(()=>{
-        if (show) refInitFocus.current?.focus();
-    }, [show]);
+    useInitialFocus(show, ref, true);
 
     return (
         <Model show={show} onKeyDown={(e) => {trapFocusInComponent(e, refModalTrap);}} ref={refModalTrap}>
@@ -127,8 +123,8 @@ export default function ConfirmationModalImpl(props) {
                 <HBar/>
                 <Slot>{detailText}</Slot>
                 <ButtonBar>
-                    <Button ref={refInitFocus} onClick={sendYes} primary={true}>Yes</Button>
                     <Button onClick={sendNo} primary={false}>No</Button>
+                    <Button onClick={sendYes} primary={true}>Yes</Button>
                 </ButtonBar>
             </Container>
         </Model>

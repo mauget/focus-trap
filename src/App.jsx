@@ -77,6 +77,12 @@ function App() {
                 headerText="Confirmation"
                 handleClose={hideModal}
                 openPos={Pos.CM_CENTER_CENTER}>
+                <input type="text" placeholder="one"/>
+                <br/>
+                <input type="text" placeholder="two"/>
+                <br/>
+                <input type="text" placeholder="three"/>
+                <br/>
                 {`Increment count "${count}"?`}
             </ConfirmationModal>
         </>

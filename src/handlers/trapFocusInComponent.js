@@ -1,25 +1,34 @@
+/**
+ * Collect array of ordered focusable child elements
+ * @param ref
+ * @returns {*}
+ */
+const queryFocusableElements = (ref) => {
+    // Core data: collect ordered focusable child elements
+    const { current: rootElement } = ref;
+    const query = 'a[href], button:not([disabled]), textarea, input, select';
 
-// Based on https://dev.to/mohitkyadav/how-to-trap-focus-in-react-3in8
-// Call from onKeyDown on root of modal, passing a ref to that root
+    return rootElement.querySelectorAll(query);
+}
+
+/**
+ * Side-effect: trap focus to focusable members of the given event's subtree.
+ *
+ * Based on https://dev.to/mohitkyadav/how-to-trap-focus-in-react-3in8
+ * Call from onKeyDown on root of modal, passing a ref to that root
+ * @param event
+ * @param refFocusTrap
+ */
 const trapFocusInComponent = (event, refFocusTrap) => {
     // No tab, no interest
     if (event.key !== 'Tab') return;
 
-    // Initial housekeeping ...
+    // Get first and last elements
+    const focusableElements = queryFocusableElements(refFocusTrap);
+    if (focusableElements.length < 1) return;
 
-    // Core data: collect ordered focusable child elements
-    const { current: rootElement } = refFocusTrap;
-    const query = 'a[href], button:not([disabled]), textarea, input, select';
-
-    const focusableElements = rootElement.querySelectorAll(query);
-    const { length: elementCount } = focusableElements;
-
-    // Maybe there are no focusable elements?
-    if (elementCount === 0) return
-
-    // Capture first and last elements of ordered list (each could be same element)
-    const firstElement = focusableElements[0]
-    const lastElement = focusableElements[elementCount - 1]
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
 
     const { shiftKey: backwardDirection } = event;
     const forwardDirection = !backwardDirection;
@@ -44,5 +53,5 @@ const trapFocusInComponent = (event, refFocusTrap) => {
         event.preventDefault();
     }
 }
-
+export { trapFocusInComponent, queryFocusableElements };
 export default trapFocusInComponent;
