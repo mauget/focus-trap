@@ -134,9 +134,5 @@ ConfirmationModalImpl.propTypes = {
     handleClose: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,
     headerText: PropTypes.string.isRequired,
-    detailText: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element
-    ]),
     openPos: PropTypes.symbol.isRequired
 };
